@@ -42,7 +42,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setNationalArea("中国");
             employee.setCity("深圳");
             employees.add(employee);
-            employeeMapper.insert(employee);
+            if(employees.size() % 1000 == 0){
+                employeeMapper.batchInsert(employees);
+                employees.clear();
+            }
         }
         long afterTime = System.currentTimeMillis();
         log.info("耗时:{}", afterTime - beforeTime);

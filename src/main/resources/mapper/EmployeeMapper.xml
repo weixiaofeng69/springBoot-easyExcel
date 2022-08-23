@@ -5,25 +5,27 @@
 <mapper namespace="cn.com.easyExcel.mapper.EmployeeMapper">
 
     <insert id="batchInsert">
-        INSERT INTO `employee` (
-        `user_name`,
-        `gender`,
-        `age`,
-        `birthday`,
-        `marital_status`,
-        `education`,
-        `blood_type`,
-        `mobile`,
-        `department_name`,
-        `national_area`,
-        `province`,
-        `city`,
-        `id_card_number`,
-        `personal_mail_box`
+        INSERT INTO employee (
+        id,
+        user_name,
+        gender,
+        age,
+        birthday,
+        marital_status,
+        education,
+        blood_type,
+        mobile,
+        department_name,
+        national_area,
+        province,
+        city,
+        id_card_number,
+        personal_mail_box
         )
         VALUES
         <foreach collection="list" item="employee" separator=",">
             (
+            #{employee.id},
             #{employee.userName},
             #{employee.gender},
             #{employee.age},
