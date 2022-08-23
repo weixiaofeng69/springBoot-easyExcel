@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -30,6 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> employees = new ArrayList<Employee>();
         for (int i = 0; i < 500000; i++) {
             Employee employee = new Employee();
+            employee.setId(getUUID32());
             employee.setUserName(getRandomName());
             employee.setGender(getRandomGender());
             employee.setAge(getRandomAge());
@@ -40,10 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setNationalArea("中国");
             employee.setCity("深圳");
             employees.add(employee);
-            if(employees.size() % 1000 == 0){
-                employeeMapper.batchInsert(employees);
-                employees.clear();
-            }
+            employeeMapper.insert(employee);
         }
         long afterTime = System.currentTimeMillis();
         log.info("耗时:{}", afterTime - beforeTime);
@@ -119,5 +118,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         String[] doc = {"行政部", "财务部", "技术部", "市场部", "公关部"};
         int index = (int) (Math.random() * doc.length);
         return doc[index];
+    }
+    public static String getUUID32() {
+        return UUID.randomUUID().toString().replace("-", "").toLowerCase();
     }
 }
